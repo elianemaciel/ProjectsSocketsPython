@@ -4,4 +4,6 @@
 
 ### Create database
 
-- `python3 src/models/dump.py`
+- Criar database no postgresql
+- Alterar arquivo `src/models/settings.json`
+- `python3 src/dump.py`

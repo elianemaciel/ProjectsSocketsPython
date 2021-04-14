@@ -1,2 +1,3 @@
 SQLAlchemy
 sockets
+psycopg2

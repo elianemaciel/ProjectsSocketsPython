@@ -1,5 +1,5 @@
 from sqlalchemy import *
-from models.Base import Base
+from models.base import Base
 
 class Autor(Base):
     __tablename__ = 'autor'

@@ -4,6 +4,6 @@
         "password": "eliane94" ,
         "host": "localhost",
         "port": 5432,
-        "dbname": "db"
+        "dbname": "new_db2"
     }
 }
