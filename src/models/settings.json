@@ -1,9 +1,9 @@
 {
     "db": {
         "user": "postgres",
-        "password": "eliane94" ,
+        "password": "postgres" ,
         "host": "localhost",
         "port": 5432,
-        "dbname": "new_db2"
+        "dbname": "db"
     }
 }
