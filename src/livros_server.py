@@ -2,46 +2,67 @@ import sys
 import socket
 import json
 from types import SimpleNamespace
-# from sockets.python2.server import Server
 from models.Livros import Livros
 from models.Autor import Autor
 from models.Edicao import Edicao
 from models.LivroAutor import LivroAutor
 from models.LivrosTemp import LivrosTemp
+from dto.CreateDto import CreateDTO
 
 
-# print(Livros.query.all())
+def create_book(s):
+  s.send('200'.encode())
+  data = s.recv(10000).decode('utf-8')
+  print('Received: %s' % data)
+  #  TODO ADD SAVE
+  s.send("Criado com sucesso".encode())
+
+def find_book(s):
+  s.send("TODO ADD".encode)
 
 
-# class LivrosServer(Server):
-#     def act_on(self, data, addr):
-#         # Do something with data (in bytes) and return a string.
-#         return data
+def find_book_year(s):
+  s.send("TODO ADD".encode)
 
 
-# server = MyServer(listening_address=('127.0.0.1', 11112))
-# server.listen()
+def delete_book(s):
+  s.send("TODO ADD".encode)
 
-m = {"id": 1, "name": "server"}
-data = json.dumps(m)
 
-if len(sys.argv) != 2:
-  print('%s <porta>' % sys.argv[0])
-  sys.exit(0)
+def edit_book(s):
+  s.send("TODO ADD".encode)
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-ip = 'localhost'
-porta = int(sys.argv[1])
+def main():
+  if len(sys.argv) != 2:
+    print('%s <porta>' % sys.argv[0])
+    sys.exit(0)
 
-s.bind((ip, porta))
-s.listen(10)
+  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  ip = 'localhost'
+  porta = int(sys.argv[1])
+  s.bind((ip, porta))
+  s.listen(10)
 
-while True:
-  s1, end = s.accept()
-  msg = s1.recv(10000).decode('utf-8')
-  print('Received: %s' % msg)
-  dd = json.loads(msg, object_hook=lambda d: SimpleNamespace(**d))
-  print(dd.name)
-  s1.sendall((bytes(data,encoding='utf-8')))
-  s1.close()
+  while(True):
+    s1, end = s.accept()
+    m = int(s1.recv(1024).decode('utf-8'))
+    if m == 1:
+      create_book(s1)
+    elif m == 2:
+      find_book(s1)
+    elif m == 3:
+      find_book_year(s1)
+    elif m == 4:
+      delete_book(s1)
+    elif m == 5:
+      edit_book(s1)
+    else:
+      s1.send('500'.encode)
+      print("OP invalida")
+
+    s1.close()
+
+
+if __name__ == "__main__":
+    main()
