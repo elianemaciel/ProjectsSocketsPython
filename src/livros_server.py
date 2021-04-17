@@ -9,7 +9,6 @@ from models.LivroAutor import LivroAutor
 from models.LivrosTemp import LivrosTemp
 from dto.CreateDto import CreateDTO
 
-
 def create_book(s):
   s.send('200'.encode())
   data = s.recv(10000).decode('utf-8')
@@ -18,20 +17,36 @@ def create_book(s):
   s.send("Criado com sucesso".encode())
 
 def find_book(s):
-  s.send("TODO ADD".encode)
-
+  s.send('200'.encode())
+  data = s.recv(10000).decode('utf-8')
+  print('Received: %s' % data)
+  #  TODO ADD FIND
+  r = {'data':['livro 1', 'livro 2']}
+  data = json.dumps(r)
+  s.sendall((bytes(data, encoding='utf-8')))
 
 def find_book_year(s):
-  s.send("TODO ADD".encode)
-
+  s.send('200'.encode())
+  data = s.recv(10000).decode('utf-8')
+  print('Received: %s' % data)
+  #  TODO ADD FIND
+  r = {'data':['livro 1', 'livro 2']}
+  data = json.dumps(r)
+  s.sendall((bytes(data, encoding='utf-8')))
 
 def delete_book(s):
-  s.send("TODO ADD".encode)
-
+  s.send('200'.encode())
+  data = s.recv(10000).decode('utf-8')
+  print('Received: %s' % data)
+  #  TODO ADD DELETE
+  s.send("Deletado com sucesso".encode())
 
 def edit_book(s):
-  s.send("TODO ADD".encode)
-
+  s.send('200'.encode())
+  data = s.recv(10000).decode('utf-8')
+  print('Received: %s' % data)
+  #  TODO ADD EDIT
+  s.send("Editado com sucesso".encode())
 
 def main():
   if len(sys.argv) != 2:
@@ -62,7 +77,6 @@ def main():
       print("OP invalida")
 
     s1.close()
-
 
 if __name__ == "__main__":
     main()
