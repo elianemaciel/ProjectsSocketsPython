@@ -117,7 +117,7 @@ def edit_book():
     porta = int(sys.argv[2])
     s.connect((ip, porta))
 
-    book_codigo = input("Informe o cógigo do livro:\n")
+    book_codigo = input("Informe o código do livro:\n")
     book_title = input("Informe o titulo do livro:\n")
     book_author = input("Informe o autor do livro\n")
     book_edition = input("Informe a edicao do livro\n")
