@@ -9,6 +9,9 @@
 - `python3 src/dump.py`
 
 
+`ALTER SEQUENCE livros_id_seq RESTART WITH 10000;`
+`ALTER SEQUENCE autor_id_seq RESTART WITH 10000;`
+
 ### Executar
 
 - python3 src/livros_server.py 6001
