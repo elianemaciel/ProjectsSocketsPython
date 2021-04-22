@@ -2,10 +2,6 @@ from sqlalchemy.sql import text
 from models.db import engine
 from sqlalchemy.orm import relationship, backref, sessionmaker
 
-# Create all tables by issuing CREATE TABLE commands to the DB.
-# Base.metadata.drop_all(engine) 
-# Base.metadata.create_all(engine) 
-
 Session = sessionmaker(bind=engine)
 session = Session()
 
