@@ -11,9 +11,12 @@ def create_book(s, db):
     data = s.recv(10000).decode('utf-8')
     print('Received: %s' % data)
 
-    db.create_book(json.loads(data))
+    try:
+        db.create_book(json.loads(data))
 
-    s.send("Criado com sucesso".encode())
+        s.send("Criado com sucesso".encode())
+    except:
+        s.send("Problema ao criar livro".encode())
 
 
 def find_book(s, db):

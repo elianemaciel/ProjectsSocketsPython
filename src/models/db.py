@@ -3,7 +3,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy import create_engine
 
-from models import base, Autor, LivroAutor, Livros, LivrosTemp
+from models import base, Livros, LivrosTemp
 
 with open('src/models/settings.json') as f:
     settings = json.load(f)

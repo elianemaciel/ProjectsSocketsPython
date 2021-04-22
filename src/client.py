@@ -74,7 +74,7 @@ def find_book_year():
 
     book_edition = input("Informe a edicao do livro\n")
     book_year = input("Informe o ano do livro\n")
-    book = CreateDTO(edicao=book_edition, year=book_year)
+    book = CreateDTO(edition=book_edition, year=book_year)
 
     s.send('3'.encode())
     msg = int(s.recv(1024))
