@@ -2,7 +2,7 @@ import json
 
 
 class CreateDTO:
-    def __init__(self, title=None, author=None, edition=None, year=None, codigo=None):
+    def __init__(self, title=False, author=False, edition=False, year=False, codigo=False):
         self.codigo = codigo
         self.titulo = title
         self.autor = author

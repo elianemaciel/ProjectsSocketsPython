@@ -1,5 +1,5 @@
 import sys
-import socket
+import xmlrpc.client
 import json
 from time import sleep
 from dto.CreateDto import CreateDTO
@@ -17,124 +17,43 @@ def menu():
     return d
 
 
-def create_book():
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    ip = sys.argv[1]
-    porta = int(sys.argv[2])
-    s.connect((ip, porta))
-
+def create_book(servidor):
     book_title = input("Informe o titulo do livro:\n")
     book_author = input("Informe o autor do livro\n")
     book_edition = input("Informe a edicao do livro\n")
     book_year = input("Informe o ano do livro\n")
     book = CreateDTO(book_title, book_author, book_edition, book_year)
-
-    s.send('1'.encode())
-    msg = int(s.recv(1024))
-
-    print(msg)
-    if msg == 200:
-        s.sendall((bytes(book.to_json(), encoding='utf-8')))
-        msg = s.recv(10000)
-        print('Received: %s' % msg.decode('utf-8'))
-        s.close()
-    else:
-        print("OP invalida")
-        s.close()
+    print("%s" % servidor.create(book))
 
 
-def find_book():
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    ip = sys.argv[1]
-    porta = int(sys.argv[2])
-    s.connect((ip, porta))
-
+def find_book(servidor):
     book_title = input("Informe o titulo do livro:\n")
     book_author = input("Informe o autor do livro\n")
     book = CreateDTO(book_title, book_author)
-
-    s.send('2'.encode())
-    msg = int(s.recv(1024))
-    print(msg)
-    if msg == 200:
-        s.sendall((bytes(book.to_json(), encoding='utf-8')))
-        msg = s.recv(10000)
-        print('Received: %s' % msg.decode('utf-8'))
-        s.close()
-    else:
-        print("OP invalida")
-        s.close()
+    print("%s" % servidor.find_book(book))
 
 
-def find_book_year():
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    ip = sys.argv[1]
-    porta = int(sys.argv[2])
-    s.connect((ip, porta))
-
+def find_book_year(servidor):
     book_edition = input("Informe a edicao do livro\n")
     book_year = input("Informe o ano do livro\n")
     book = CreateDTO(edition=book_edition, year=book_year)
-
-    s.send('3'.encode())
-    msg = int(s.recv(1024))
-    print(msg)
-    if msg == 200:
-        s.sendall((bytes(book.to_json(), encoding='utf-8')))
-        msg = s.recv(10000)
-        print('Received: %s' % msg.decode('utf-8'))
-        s.close()
-    else:
-        print("OP invalida")
-        s.close()
+    print("%s" % servidor.find_book_year(book))
 
 
-def delete_book():
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    ip = sys.argv[1]
-    porta = int(sys.argv[2])
-    s.connect((ip, porta))
-
+def delete_book(servidor):
     book_title = input("Informe o titulo do livro:\n")
     book = CreateDTO(book_title)
+    print("%s" % servidor.delete_book(book))
 
-    s.send('4'.encode())
-    msg = int(s.recv(1024))
-    print(msg)
-    if msg == 200:
-        s.sendall((bytes(book.to_json(), encoding='utf-8')))
-        msg = s.recv(10000)
-        print('Received: %s' % msg.decode('utf-8'))
-        s.close()
-    else:
-        print("OP invalida")
-        s.close()
-
-
-def edit_book():
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    ip = sys.argv[1]
-    porta = int(sys.argv[2])
-    s.connect((ip, porta))
-
+def edit_book(servidor):
     book_codigo = input("Informe o código do livro:\n")
     book_title = input("Informe o titulo do livro:\n")
     book_author = input("Informe o autor do livro\n")
     book_edition = input("Informe a edicao do livro\n")
     book_year = input("Informe o ano do livro\n")
     book = CreateDTO(book_title, book_author, book_edition, book_year, book_codigo)
+    print("%s" % servidor.edit_book(book))
 
-    s.send('5'.encode())
-    msg = int(s.recv(1024))
-    print(msg)
-    if msg == 200:
-        s.sendall((bytes(book.to_json(), encoding='utf-8')))
-        msg = s.recv(10000)
-        print('Received: %s' % msg.decode('utf-8'))
-        s.close()
-    else:
-        print("OP invalida")
-        s.close()
 
 
 def main():
@@ -142,18 +61,23 @@ def main():
         print('%s <ip> <porta>' % sys.argv[0])
         sys.exit(0)
 
+    ip = sys.argv[1]
+    porta = sys.argv[2]
+
+    servidor = xmlrpc.client.ServerProxy('http://' + ip + ':'+ porta)
+
     while(True):
         m = menu()
         if m == 1:
-            create_book()
+            create_book(servidor)
         elif m == 2:
-            find_book()
+            find_book(servidor)
         elif m == 3:
-            find_book_year()
+            find_book_year(servidor)
         elif m == 4:
-            delete_book()
+            delete_book(servidor)
         elif m == 5:
-            edit_book()
+            edit_book(servidor)
         else:
             exit()
 
