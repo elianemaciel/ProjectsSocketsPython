@@ -104,7 +104,7 @@ class DBAux():
 
         if obj:
             self.session.delete(obj)
-            self.session.flush()
+            self.session.commit()
 
     def update_book(self, data):
         print(data)
